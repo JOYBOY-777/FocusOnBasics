@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    username: kuzan
+    password: kuzan6666
+    url: jdbc:mysql://localhost:3306/mybatis_skill?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+#MyBatis-Plus相关配置
+mybatis-plus:
+  configuration:
+    #日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+  #设置mybatis-Plus全局配置
+  global-config:
+    db-config:
+      id-type: auto
+    #配置全局的主键生成策略
+
+
