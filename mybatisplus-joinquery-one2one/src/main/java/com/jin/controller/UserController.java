@@ -18,4 +18,9 @@ public class UserController {
     public AjaxResult detail(@PathVariable Integer userId){
         return AjaxResult.success(userService.getOneUser(userId));
     }
+
+    @GetMapping("list")
+    public AjaxResult list(){
+        return AjaxResult.success(userService.getUserByList());
+    }
 }

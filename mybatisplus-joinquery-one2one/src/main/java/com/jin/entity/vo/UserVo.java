@@ -15,6 +15,9 @@ import lombok.experimental.Accessors;
 public class UserVo extends User {
     //组合属性把部门名字组合进来
     private String deptName;
+    private Integer staff;
+    private String tel;
+
 
     public UserVo(User user){
         super(user);

@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jin.domain.Dept;
 import com.jin.domain.User;
 import com.jin.entity.vo.UserVo;
+import com.jin.mapper.DeptMapper;
 import com.jin.mapper.UserMapper;
 import com.jin.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,19 @@ import org.springframework.stereotype.Service;
 import xin.altitude.cms.common.util.EntityUtils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    DeptMapper deptMapper;
+
     @Autowired
     private DeptServiceImpl deptService;
     @Override
@@ -45,7 +53,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public List<UserVo> getUserByList() {
-        return null;
+        //查询用户表的数据
+        List<User> userList = this.list();
+        List<UserVo> userVos = EntityUtils.toList(userList, UserVo::new);
+        //拿到里面的id集合
+        Set<Integer> deptIds = EntityUtils.toSet(userVos, UserVo::getDeptId);
+        if (deptIds.size()>0) {
+            //List<Dept> depts = deptMapper.selectBatchIds(deptIds);
+            LambdaQueryWrapper<Dept> wrapper = Wrappers.lambdaQuery(Dept.class).in(Dept::getDeptId, deptIds)
+                    .select();
+            List<Dept> depts1 = deptMapper.selectList(wrapper);
+            Map<Integer, Dept> deptMap = EntityUtils.toMap(depts1, Dept::getDeptId, e -> e);
+            //部门表空属性赋值
+            for (UserVo userVo : userVos) {
+                Dept dept = deptMap.get(userVo.getDeptId());
+                userVo.setDeptName(dept.getDeptName());
+                userVo.setStaff(dept.getStaff());
+                userVo.setTel(dept.getTel());
+            }
+        }
+
+
+
+        return userVos;
     }
 
     @Override

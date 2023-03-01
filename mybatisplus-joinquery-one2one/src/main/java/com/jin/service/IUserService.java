@@ -10,11 +10,16 @@ import com.jin.mapper.UserMapper;
 import java.util.List;
 
 public interface IUserService extends IService<User> {
-    //查询单个学生
+    //查询单个用户
     UserVo getOneUser(Integer userId);
-    //查询多个学生
+    //查询多个用户
+
+    /**
+     * 无条件的把学生对应的部门查询出来
+      * @return
+     */
     List<UserVo> getUserByList();
-    //分页查询学生信息
+    //分页查询用户信息
     IPage<UserVo> getUserByPage(Page<User> page);
 
 }
