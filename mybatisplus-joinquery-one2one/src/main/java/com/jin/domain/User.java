@@ -1,5 +1,6 @@
 package com.jin.domain;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
@@ -13,6 +14,7 @@ public class User extends Model<User> {
     private String userName;
     //一对一实际上是一对多的一种特殊的形式，记住单一的id挂载在多的表上
     private Integer deptId;
+    private Integer age;
 
     //有参构造方法，里面进行判空之后在进行初始化
     public User (User user){
@@ -20,6 +22,7 @@ public class User extends Model<User> {
             this.userId = user.getUserId();
             this.userName = user.getUserName();
             this.deptId = user.getDeptId();
+            this.age = user.getAge();
         }
     }
 }

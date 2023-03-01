@@ -19,6 +19,25 @@ public interface IUserService extends IService<User> {
       * @return
      */
     List<UserVo> getUserByList();
+
+    /**
+     * 有条件的用户查询（并且条件在主表中user中）比如说年龄大于1岁的用户
+     */
+    List<UserVo> getUserListByAge(Integer age);
+
+
+    /**
+     * 查询部门名称为tomcat的部门，通过从表信息筛选
+     * @param name
+     * @return
+     */
+    List<UserVo> getUserListByDeptName(String name);
+
+    /**
+     *
+     * @param page
+     * @return
+     */
     //分页查询用户信息
     IPage<UserVo> getUserByPage(Page<User> page);
 
